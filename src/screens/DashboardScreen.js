@@ -1,4 +1,4 @@
-import { View, Text, TextInput, StyleSheet, Dimensions, Image, StatusBar, TouchableOpacity, ScrollView } from 'react-native';
+import { PixelRatio, View, Text, TextInput, StyleSheet, Dimensions, Image, StatusBar, TouchableOpacity, ScrollView } from 'react-native';
 import React from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';;
 import * as Progress from 'react-native-progress';
@@ -27,7 +27,7 @@ const DashboardScreen = () => {
 
   return (
 
-    <View style={styles.container}>
+    <View style={styles.container1}>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
       <View style={styles.upwardContainer}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 20 }}>
@@ -199,7 +199,7 @@ const DashboardScreen = () => {
 export default DashboardScreen;
 
 const styles = StyleSheet.create({
-  container: {
+  container1: {
     flex: 1,
     backgroundColor: '#F6F8FB',
   },

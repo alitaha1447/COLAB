@@ -10,7 +10,7 @@ const LoginScreen = () => {
 
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container1}>
       <View style={styles.upwardContainer}>
         <Image source={require('../assets/loginLogo.png')} style={styles.logo} />
         {/* <Image source={require('../assets/logo2.jpg')} style={styles.logo} /> */}
@@ -54,7 +54,7 @@ const LoginScreen = () => {
 export default LoginScreen;
 
 const styles = StyleSheet.create({
-  container: {
+  container1: {
     flex: 1,
     backgroundColor: '#F6F8FB',
   },
