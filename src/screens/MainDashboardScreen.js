@@ -1,14 +1,18 @@
-import React, { useMemo, useState } from 'react';
+import React from 'react';
 import { Text, View, StyleSheet, StatusBar, Dimensions, Image, TextInput, TouchableOpacity, FlatList, ScrollView, } from 'react-native';
 import Heading from '../components/Heading';
 import { ProgressBar } from '@react-native-community/progress-bar-android';
 import { horizontalScale, verticalScale, moderateScale } from '../utils/responsivMetrics';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { pixelTopercent } from '../utils/pixelTopercent';
 import SwitchSelector from "react-native-switch-selector";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import IndicatorBell from '../components/IndicatorBell';
 import MultiColorProgressBar from '../components/MultiColorProgressBar ';
+import { BarChart } from "react-native-gifted-charts";
+
 
 
 
@@ -25,6 +29,9 @@ const { width: w, height: h } = Dimensions.get('window');
 console.log(`widthWindow : ${w}`);
 console.log(`heightWindow : ${h}`);
 
+
+
+
 const cardData = [
   { iconName: <Fontisto name={'person'} size={35} color={'#202A44'} />, text: 'Labour Data', btnText: '100' },
   { iconName: <FontAwesome5 name={'calendar-minus'} size={35} color={'#202A44'} />, text: 'Event Schedule', btnText: '5' },
@@ -34,18 +41,76 @@ const cardData = [
   { iconName: <Fontisto name={'persons'} size={35} color={'#202A44'} />, text: 'Area Of Concern', btnText: '150' },
 ]
 
+const hindranceData = [
+  { number: '8', status: 'Approval', days: '66' },
+  { number: '5', status: 'Material Issue', days: '27' },
+  { number: '1', status: 'Accident', days: '3' },
+  { number: '3', status: 'Manpower', days: '10' },
+]
+
+const data = [
+  {
+    stacks: [
+      { value: 3, color: '#202A44' },
+      { value: 3, color: '#FFBA4D' },
+      { value: 2, color: '#007EC7' },
+    ],
+    // label: 'Jan',
+  },
+  {
+    stacks: [
+      { value: 1.6, color: '#202A44' },
+      { value: 2, color: '#FFBA4D' },
+      { value: 1, color: '#007EC7' },
+    ],
+    // label: 'Jan',
+  },
+  {
+    stacks: [
+      { value: 3, color: '#202A44' },
+      { value: 3, color: '#FFBA4D' },
+      { value: 2, color: '#007EC7' },
+    ],
+    // label: 'Jan',
+  },
+  {
+    stacks: [
+      { value: 3, color: '#202A44' },
+      { value: 3, color: '#FFBA4D' },
+      { value: 2, color: '#007EC7' },
+    ],
+    // label: 'Jan',
+  },
+  {
+    stacks: [
+      { value: 0.8, color: '#202A44' },
+      { value: 3, color: '#FFBA4D' },
+      { value: 2, color: '#007EC7' },
+    ],
+    // label: 'Jan',
+  },
+  {
+    stacks: [
+      { value: 3, color: '#202A44' },
+      { value: 3, color: '#FFBA4D' },
+      { value: 2, color: '#007EC7' },
+    ],
+    // label: 'Jan',
+  },
+  {
+    stacks: [
+      { value: 3, color: '#202A44' },
+      { value: 3, color: '#FFBA4D' },
+      { value: 2, color: '#007EC7' },
+    ],
+    // label: 'Jan',
+  },
+
+];
+
+
 const MainDashboardScreen = () => {
   const progress = 1; // Full progress for demonstration
-  const [selectedValue, setSelectedValue] = useState(true); // true for Online, false for Offline
-
-  const options = [
-    { label: selectedValue ? "" : "Offline", value: false },
-    { label: selectedValue ? "Online" : "", value: true },
-  ];
-
-  const handleSwitch = (value) => {
-    setSelectedValue(value);
-  };
 
   const renderItem = ({ item }) => (
     <View style={styles.card}>
@@ -59,35 +124,15 @@ const MainDashboardScreen = () => {
     </View>
   );
 
+
+
+
+
   return (
     <View style={styles.container1}>
       <StatusBar backgroundColor={'white'} barStyle={'dark-content'} />
-      <View style={styles.topContainer}>
-        <SwitchSelector
-          options={options}
-          initial={1}
-          onPress={handleSwitch}
-          style={styles.switchSelector}
-          selectedTextStyle={{ color: selectedValue ? '#202A44' : '#FFF', }} // Customize selected text color
-          buttonColor={selectedValue ? '#FFBA4D' : '#202A44'} // Customize button color
-          backgroundColor="#EBEDF2" // Customize background color
-          borderColor="#202A44" // Customize border color
-          borderRadius={9.5} // Customize border radius
-          height={19} // Customize height
-          width={80}
-        />
-        <FontAwesome5 name='bell' size={21} color={'black'} />
-      </View>
+      <IndicatorBell />
       <ScrollView>
-        {/* <View style={styles.upwardContainer}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 20 }}>
-            <View>
-              <Text style={{ color: '#202A44', fontSize: 24, fontFamily: 'Geologica-Bold' }}>Hi, The Lake Admin</Text>
-              <Text style={{ color: '#7E7E7E', fontSize: 15, fontFamily: 'Geologica-Regular' }}>Last Sync- 6 Jan 2023</Text>
-            </View>
-            <Image source={require('../assets/ProfilePic.png')} style={styles.logo} />
-          </View>
-        </View> */}
         <Heading />
         <View style={{ flex: 1 }}>
           <View style={styles.middleContainer}>
@@ -107,22 +152,22 @@ const MainDashboardScreen = () => {
               />
             </View>
           </View>
-          <View style={styles.workInProgress}>
-            <View style={styles.workInProgressCard}>
-              <View style={styles.workInProgressCardContent}>
-                <Text style={{ fontSize: 15, lineHeight: 15, fontFamily: 'Geologica-Bold', color: '#202A44' }}>Today's Work-in-Progress</Text>
+          <View style={styles.cardContainer}>
+            <View style={styles.cardContent2}>
+              <View style={{ padding: moderateScale(20), }}>
+                <Text style={styles.cardContentHeadingText}>Today's Work-in-Progress</Text>
                 <View style={{ marginTop: hs * 0.027, flexDirection: 'row', justifyContent: 'space-between' }}>
                   <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
-                    <FontAwesome name='circle' size={11} color={'#007EC7'} />
-                    <Text style={{ color: '#5A5A5A', fontSize: 12, lineHeight: 12, fontFamily: 'Geologica-Regular' }}>PRW</Text>
+                    <FontAwesome name='circle' size={wp('4.05%')} color={'#007EC7'} />
+                    <Text style={{ color: '#5A5A5A', fontSize: wp('4.05%'), fontFamily: 'Geologica-Regular' }}>PRW</Text>
                   </View>
                   <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
-                    <FontAwesome name='circle' size={11} color={'#FFBA4D'} />
-                    <Text style={{ color: '#5A5A5A', fontSize: 12, lineHeight: 12, fontFamily: 'Geologica-Regular' }}>Labour Supply</Text>
+                    <FontAwesome name='circle' size={wp('4.05%')} color={'#FFBA4D'} />
+                    <Text style={{ color: '#5A5A5A', fontSize: wp('4.05%'), fontFamily: 'Geologica-Regular' }}>Labour Supply</Text>
                   </View>
                   <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
-                    <FontAwesome name='circle' size={11} color={'#202A44'} />
-                    <Text style={{ color: '#5A5A5A', fontSize: 12, lineHeight: 12, fontFamily: 'Geologica-Regular' }}>Miscellaneous</Text>
+                    <FontAwesome name='circle' size={wp('4.05%')} color={'#202A44'} />
+                    <Text style={{ color: '#5A5A5A', fontSize: wp('4.05%'), fontFamily: 'Geologica-Regular' }}>Miscellaneous</Text>
                   </View>
                 </View>
                 <View style={{ marginTop: 20 }}>
@@ -144,44 +189,179 @@ const MainDashboardScreen = () => {
               </View>
             </View>
           </View>
+          {/* Schedule Summary */}
+          <View style={styles.cardContainer}>
+            <View style={styles.cardContent2}>
+              <View style={{ padding: moderateScale(20), }}>
+                <Text style={styles.cardContentHeadingText}>Schedule Summary</Text>
+                <View style={{ marginTop: 20, flexDirection: 'row', justifyContent: 'space-between' }}>
+                  <Text style={{ color: '#202A44', fontSize: wp('4.17%'), lineHeight: 15, fontFamily: 'Geologica-Medium' }}>02 Mar 2023</Text>
+                  <Text style={{ color: '#202A44', fontSize: wp('4.17%'), lineHeight: 15, fontFamily: 'Geologica-Medium' }}>11 Aug 2024</Text>
+                </View>
+                <View style={{ marginTop: 8, flexDirection: 'row', justifyContent: 'space-between' }}>
+                  <Text style={{ color: '#8E8E8E', fontSize: 10, lineHeight: 10, fontFamily: 'Geologica-Regular' }}>Planned Value Of Work</Text>
+                  <Text style={{ color: '#8E8E8E', fontSize: 10, lineHeight: 10, fontFamily: 'Geologica-Regular' }}>Work Force Count</Text>
+                </View>
+                <View style={{ marginTop: 20, flexDirection: 'row', justifyContent: 'space-between' }}>
+                  <Text style={{ color: '#202A44', fontSize: wp('4.17%'), lineHeight: 15, fontFamily: 'Geologica-Medium' }}>02 Mar 2023</Text>
+                  <Text style={{ color: '#202A44', fontSize: wp('4.17%'), lineHeight: 15, fontFamily: 'Geologica-Medium' }}>11 Aug 2024</Text>
+                </View>
+                <View style={{ marginTop: 8, flexDirection: 'row', justifyContent: 'space-between' }}>
+                  <Text style={{ color: '#8E8E8E', fontSize: 10, lineHeight: 10, fontFamily: 'Geologica-Regular' }}>Planned Value Of Work</Text>
+                  <Text style={{ color: '#8E8E8E', fontSize: 10, lineHeight: 10, fontFamily: 'Geologica-Regular' }}>Work Force Count</Text>
+                </View>
+                <View style={{
+                  marginTop: wp('4.17%'),
+                  borderBottomWidth: 1,
+                  borderBottomColor: 'lightgray',
+                  marginBottom: wp('4.17%'),
+                }} />
+                <MultiColorProgressBar progress={progress} />
+              </View>
+            </View>
+          </View>
+          {/* Total Hindrance */}
+          <View style={styles.cardContainer}>
+            <View style={styles.cardContent2}>
+              <View style={{ padding: moderateScale(20) }}>
+                <Text style={styles.cardContentHeadingText}>Total Hindrance : 180</Text>
 
-          <View style={styles.workInProgress}>
-            <View style={styles.workInProgressCard}>
-              <View style={styles.workInProgressCardContent}>
-                <Text style={{ fontSize: 15, lineHeight: 15, fontFamily: 'Geologica-Bold', color: '#202A44' }}>Today's Work-in-Progress</Text>
-                <View style={{ marginTop: hs * 0.027, flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
-                    <FontAwesome name='circle' size={11} color={'#007EC7'} />
-                    <Text style={{ color: '#5A5A5A', fontSize: 12, lineHeight: 12, fontFamily: 'Geologica-Regular' }}>PRW</Text>
-                  </View>
-                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
-                    <FontAwesome name='circle' size={11} color={'#FFBA4D'} />
-                    <Text style={{ color: '#5A5A5A', fontSize: 12, lineHeight: 12, fontFamily: 'Geologica-Regular' }}>Labour Supply</Text>
-                  </View>
-                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
-                    <FontAwesome name='circle' size={11} color={'#202A44'} />
-                    <Text style={{ color: '#5A5A5A', fontSize: 12, lineHeight: 12, fontFamily: 'Geologica-Regular' }}>Miscellaneous</Text>
-                  </View>
-                </View>
-                <View style={{ marginTop: 20 }}>
-                  <MultiColorProgressBar progress={progress} />
-                </View>
-                <View style={{ marginTop: 20, flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <Text style={{ color: '#202A44', fontSize: 15, lineHeight: 15, fontFamily: 'Geologica-SemiBold' }}>₹ 483779.56</Text>
-                  <Text style={{ color: '#202A44', fontSize: 15, lineHeight: 15, fontFamily: 'Geologica-SemiBold' }}>17 Labours</Text>
-                </View>
-                <View style={{ marginTop: 8, flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <Text style={{ color: '#8E8E8E', fontSize: 10, lineHeight: 10, fontFamily: 'Geologica-Regular' }}>Planned Value Of Work</Text>
-                  <Text style={{ color: '#8E8E8E', fontSize: 10, lineHeight: 10, fontFamily: 'Geologica-Regular' }}>Work Force Count</Text>
-                </View>
-                <View style={{ alignItems: 'center', marginTop: 20 }}>
-                  <TouchableOpacity style={{ backgroundColor: '#202A44', width: 89, justifyContent: 'center', alignItems: 'center', borderRadius: 13.5, height: 27 }}>
-                    <Text style={{ color: '#FFFFFF', fontSize: 12, lineHeight: 12, fontFamily: 'Geologica-Regular' }}>View All</Text>
-                  </TouchableOpacity>
+                <View style={{ marginTop: 20, gap: 4, flexDirection: 'row', flexWrap: 'wrap' }}>
+
+                  {
+                    hindranceData.map((item, index) => (
+                      <View style={styles.hindranceBox} key={index}>
+                        <View style={styles.topBox}>
+                          <Text style={{ fontSize: 14, color: '#DBDBDB', fontFamily: 'Geologica-SemiBold' }}>{item.number}</Text>
+                          <Text style={{ fontSize: 12, color: '#DBDBDB', fontFamily: 'Geologica-Regular' }}>{item.status}</Text>
+                        </View>
+                        <View style={styles.bottomBox}>
+                          <Text style={{ fontSize: 12, color: '#202A44', fontFamily: 'Geologica-Regular' }}>Days {item.days}</Text>
+                        </View>
+                      </View>
+                    ))
+                  }
+
                 </View>
               </View>
             </View>
           </View>
+          {/* Work Trend */}
+          <View style={styles.cardContainer}>
+            <View style={styles.cardContent2}>
+              <View style={{ padding: moderateScale(20) }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Text style={styles.cardContentHeadingText}>Work Trend</Text>
+                  <TouchableOpacity style={styles.workTrendBtn}>
+                    <FontAwesome5 name='calendar-alt' size={wp('5%')} color={'#FFFFFF'} />
+                    <Text style={{ color: '#FFFFFF', fontSize: wp('4%'), }}>6 Jan 2023 </Text>
+                  </TouchableOpacity>
+                </View>
+
+                <View style={styles.chartContainer}>
+                  <BarChart
+                    stackData={data}
+                    frontColor={'#177AD5'}
+                    barWidth={15}
+                    noOfSections={4}
+                    width={wp('66.67%')}
+                    stepValue={2}
+                    spacing={wp('5.56%')}
+                    initialSpacing={5}
+                    showLine={true}
+                  />
+                </View>
+
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
+                    <FontAwesome name='circle' size={wp('4.05%')} color={'#007EC7'} />
+                    <Text style={{ color: '#5A5A5A', fontSize: wp('4.05%'), fontFamily: 'Geologica-Regular' }}>In House</Text>
+                  </View>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
+                    <FontAwesome name='circle' size={wp('4.05%')} color={'#FFBA4D'} />
+                    <Text style={{ color: '#5A5A5A', fontSize: wp('4.05%'), fontFamily: 'Geologica-Regular' }}>PRW</Text>
+                  </View>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
+                    <FontAwesome name='circle' size={wp('4.05%')} color={'#FF4560'} />
+                    <Text style={{ color: '#5A5A5A', fontSize: wp('4.05%'), fontFamily: 'Geologica-Regular' }}>BCWP</Text>
+                  </View>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
+                    <FontAwesome name='circle' size={wp('4.05%')} color={'#202A44'} />
+                    <Text style={{ color: '#5A5A5A', fontSize: wp('4.05%'), fontFamily: 'Geologica-Regular' }}>MISC</Text>
+                  </View>
+                </View>
+
+              </View>
+            </View>
+          </View>
+          {/* Work Summary */}
+          <View style={styles.cardContainer}>
+            <View style={styles.cardContent2}>
+              <View style={{ padding: moderateScale(20) }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Text style={styles.cardContentHeadingText}>Work Summary</Text>
+                </View>
+                <View style={{ marginTop: 20, flexDirection: 'row', justifyContent: 'space-between' }}>
+                  <Text style={{ color: '#202A44', fontSize: wp('4.17%'), lineHeight: 15, fontFamily: 'Geologica-Medium' }}>573.63</Text>
+                  <Text style={{ color: '#202A44', fontSize: wp('4.17%'), lineHeight: 15, fontFamily: 'Geologica-Medium' }}>735.19</Text>
+                </View>
+                <View style={{ marginTop: 8, flexDirection: 'row', justifyContent: 'space-between' }}>
+                  <Text style={{ color: '#8E8E8E', fontSize: wp('2.78%'), lineHeight: 10, fontFamily: 'Geologica-Regular' }}>Total Project Value</Text>
+                  <Text style={{ color: '#8E8E8E', fontSize: wp('2.78%'), lineHeight: 10, fontFamily: 'Geologica-Regular' }}>Work Awarded</Text>
+                </View>
+                <View style={{ marginTop: 20, flexDirection: 'row', justifyContent: 'space-between' }}>
+                  <Text style={{ color: '#202A44', fontSize: wp('4.17%'), lineHeight: 15, fontFamily: 'Geologica-Medium' }}>234.0</Text>
+                  <Text style={{ color: '#202A44', fontSize: wp('4.17%'), lineHeight: 15, fontFamily: 'Geologica-Medium' }}>100</Text>
+                </View>
+                <View style={{ marginTop: 8, flexDirection: 'row', justifyContent: 'space-between' }}>
+                  <Text style={{ color: '#8E8E8E', fontSize: wp('2.78%'), lineHeight: 10, fontFamily: 'Geologica-Regular' }}>PO Created</Text>
+                  <Text style={{ color: '#8E8E8E', fontSize: wp('2.78%'), lineHeight: 10, fontFamily: 'Geologica-Regular' }}>Total Extra Work</Text>
+                </View>
+                <View style={{
+                  marginTop: wp('4.17%'),
+                  borderBottomWidth: 1,
+                  borderBottomColor: 'lightgray',
+                  marginBottom: wp('4.17%'),
+                }} />
+                {/* <View style={styles.chartContainer}>
+                  <BarChart
+                    horizontal
+                    stackData={data}
+                    frontColor={'#177AD5'}
+                    barWidth={15}
+                    noOfSections={4}
+                    width={wp('66.67%')}
+                    stepValue={2}
+                    spacing={wp('4.56%')}
+                    initialSpacing={5}
+                    showLine={true}
+
+                  />
+                </View>
+
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
+                    <FontAwesome name='circle' size={wp('4.05%')} color={'#007EC7'} />
+                    <Text style={{ color: '#5A5A5A', fontSize: wp('4.05%'), fontFamily: 'Geologica-Regular' }}>In House</Text>
+                  </View>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
+                    <FontAwesome name='circle' size={wp('4.05%')} color={'#FFBA4D'} />
+                    <Text style={{ color: '#5A5A5A', fontSize: wp('4.05%'), fontFamily: 'Geologica-Regular' }}>PRW</Text>
+                  </View>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
+                    <FontAwesome name='circle' size={wp('4.05%')} color={'#FF4560'} />
+                    <Text style={{ color: '#5A5A5A', fontSize: wp('4.05%'), fontFamily: 'Geologica-Regular' }}>BCWP</Text>
+                  </View>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
+                    <FontAwesome name='circle' size={wp('4.05%')} color={'#202A44'} />
+                    <Text style={{ color: '#5A5A5A', fontSize: wp('4.05%'), fontFamily: 'Geologica-Regular' }}>MISC</Text>
+                  </View>
+                </View> */}
+
+              </View>
+            </View>
+          </View>
+          {/*  */}
         </View>
       </ScrollView >
     </View >
@@ -195,28 +375,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F6F8FB',
   },
-  topContainer: {
-    alignItems: 'center', // Center the SwitchSelector horizontally
-    justifyContent: 'center',
-    height: hs * 0.0528,
-    backgroundColor: '#FFFFFF',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: ws * 0.056,
-  },
-  switchSelector: {
-    width: 80, // Set the width to 89px
-  },
-  // upwardContainer: {
-  //   width: '100%',
-  //   // height: hs / 4.5,
-  // },
-  // logo: {
-  //   backgroundColor: '#FFBA4D',
-  //   height: 60,
-  //   width: 60,
-  //   borderRadius: 50,
-  // },
   middleContainer: {
     height: 176,
     width: '100%',
@@ -260,15 +418,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   card: {
-    width: (width / 2) - 28,
+    width: (width / 2) - moderateScale(30),
     height: 135,
     borderRadius: 10,
     backgroundColor: '#FFFFFF',
     marginRight: 8
   },
   cardContent: {
-    padding: 20,
-    gap: 10
+    padding: moderateScale(20),
+    gap: moderateScale(10)
   },
   cardBtn: {
     width: 55.81,
@@ -284,19 +442,61 @@ const styles = StyleSheet.create({
     color: '#202A44',
     fontFamily: 'Geologica-SemiBold',
   },
-  workInProgress: {
+  cardContainer: {
     width: '100%',
-    marginTop: 20,
-    paddingHorizontal: ws * 0.056,
-    // paddingHorizontal: horizontalScale(25),
+    marginTop: hp('2.9%'),
+    // paddingHorizontal: ws * 0.056,
+    paddingHorizontal: horizontalScale(25),
   },
-  workInProgressCard: {
-    height: 225,
+  cardContent2: {
+    height: 'auto',
+    // height: hp('32.51%'),
     width: '100%',
     borderRadius: 12,
     backgroundColor: '#FFFFFF'
   },
-  workInProgressCardContent: {
-    padding: 20,
-  }
+  cardContentHeadingText: {
+    fontSize: wp('5.55%'),
+    lineHeight: wp('5.55%'),
+    fontFamily: 'Geologica-Bold',
+    color: '#202A44'
+  },
+  hindranceBox: {
+    height: hp('10.4%'),
+    width: wp('27%'),
+  },
+  topBox: {
+    width: '100%',
+    flexBasis: '70%',
+    backgroundColor: '#202A44',
+    paddingHorizontal: 8,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10
+  },
+  bottomBox: {
+    width: '100%',
+    flexBasis: '30%',
+    backgroundColor: '#F6F8FB',
+    paddingHorizontal: 8,
+    justifyContent: 'center',
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10
+  },
+  workTrendBtn: {
+    width: wp('29.8%'),
+    height: hp('6.5%'),
+    borderRadius: 10,
+    backgroundColor: '#202A44',
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly'
+  },
+  chartContainer: {
+    marginTop: moderateScale(20),
+    height: 'auto',
+    backgroundColor: 'gray',
+    paddingVertical: hp('1.5%'),
+  },
+
+
 });

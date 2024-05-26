@@ -47,7 +47,8 @@ const DashboardScreen = () => {
           <FontAwesome5 name='calendar-alt' color={'#202A44'} size={26} style={styles.icon} />
         </View>
       </View>
-      <ScrollView style={{ marginTop: 10 }}>
+      <ScrollView style={{ marginTop: 0 }}>
+        {/* <ScrollView style={{ marginTop: 10 }}> */}
         <View style={styles.middleContainer}>
           {/* Card 1 */}
           <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('MainDashboardScreen')}>
@@ -156,7 +157,7 @@ const DashboardScreen = () => {
                 direction="clockwise" // Progress direction
                 strokeCap="butt"
                 allowFontScaling={true}
-                color="#202A44" // Set the filled color to dark blue
+                color="#FFBA4D" // Set the filled color to dark blue
                 unfilledColor="#F3F6FB" // Set the unfilled part to light gray
                 startAngle={-Math.PI / 2} // Rotate the start angle by 90 degrees (to start from the top)
                 style={styles.progress}
@@ -205,7 +206,8 @@ const styles = StyleSheet.create({
   },
   upwardContainer: {
     width: '100%',
-    height: hs / 4.5,
+    height: hs / 5.5,
+    // height: hs / 4.5,
     // backgroundColor: 'red',
   },
   logo: {
