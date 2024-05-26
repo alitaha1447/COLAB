@@ -25,19 +25,6 @@ const ProfileScreen = () => {
 
   };
 
-  <Modal
-    isVisible={isModalVisible}
-    coverScreen={true}
-    hasBackdrop={false}
-    style={styles.fullScreenModal}
-  >
-    <View style={styles.modalContent}>
-      <Text>Hello!</Text>
-      <Button title="Hide modal" onPress={toggleModal} />
-    </View>
-  </Modal>
-
-
   return (
     <ScrollView style={styles.scrollViewStyle}>
       <View style={styles.profileContainer}>
