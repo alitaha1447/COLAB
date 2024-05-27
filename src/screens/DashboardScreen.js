@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
   },
   upwardContainer: {
     width: '100%',
-    height: hs / 5.5,
+    height: hs / 4.6,
     // height: hs / 4.5,
     // backgroundColor: 'red',
   },

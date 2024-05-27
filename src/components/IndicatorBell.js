@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import SwitchSelector from "react-native-switch-selector";
 import { horizontalScale, verticalScale, moderateScale } from '../utils/responsivMetrics';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const { width, height } = Dimensions.get('screen');
 const ws = width;
@@ -32,10 +32,9 @@ const IndicatorBell = () => {
         backgroundColor="#EBEDF2"
         borderColor="#202A44"
         borderRadius={moderateScale(9.5)}
-        height={verticalScale(20)} // Adjust height for better text visibility
-
+        height={verticalScale(25)} // Adjust height for better text visibility
       />
-      <FontAwesome5 name='bell' size={21} color={'black'} />
+      <MaterialIcons name='notifications' size={25} color={'black'} />
     </View>
   )
 }
@@ -45,22 +44,27 @@ const styles = StyleSheet.create({
   topContainer: {
     alignItems: 'center', // Center the SwitchSelector horizontally
     justifyContent: 'center',
-    // height: hs * 0.0528,
-    height: verticalScale(39),
+
+    height: verticalScale(60),
     backgroundColor: '#FFFFFF',
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: ws * 0.056,
+
   },
   switchSelector: {
-    width: horizontalScale(90),
+    width: horizontalScale(120),
   },
-  text: {
-    fontSize: moderateScale(11), // Adjust font size for better text visibility
-    color: '#202A44', // Default text color
-  },
+  // text: {
+  //   fontSize: moderateScale(15), // Adjust font size for better text visibility
+  //   color: '#202A44', // Default text color
+  //   elevation: 5,
+  // },
   selectedText: {
     fontSize: moderateScale(11), // Adjust font size for better text visibility
-    color: '#fff', // Selected text color
+    color: '#FFFFFF', // Selected text color
+    fontFamily: 'Geologica-Regular',
+    elevation: 5,
+
   },
 });
